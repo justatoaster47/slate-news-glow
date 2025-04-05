@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { User } from 'lucide-react';
@@ -13,22 +12,30 @@ interface NavbarProps {
 
 const Navbar = ({ activeCategory, setActiveCategory }: NavbarProps) => {
   return (
-    <nav className="w-full flex justify-between items-center py-4 px-6 border-b border-slate-50">
-      <div className="flex space-x-1 items-center">
+    <nav className="w-full flex justify-between items-center py-4 px-6 border-b border-slate-200">
+      <div className="flex items-center">
+        <span className="text-xl font-bold text-gray-800">News Dashboard</span>
+      </div>
+      <div className="flex justify-center space-x-2 items-center">
         {categories.map((category) => (
           <button
             key={category}
             onClick={() => setActiveCategory(category)}
-            className={`category-pill ${activeCategory === category ? 'bg-slate-100 text-slate-300' : 'text-slate-200 hover:bg-slate-50'}`}
+            className={`px-4 py-1 rounded-full text-sm font-medium transition-colors duration-150 capitalize ${
+              activeCategory === category
+                ? 'bg-slate-200 text-slate-900'
+                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+            }`}
           >
             {category}
           </button>
         ))}
       </div>
-      <Button variant="ghost" className="rounded-full" aria-label="Account">
-        <User className="h-5 w-5 text-slate-300" />
-        <span className="ml-2 text-slate-300">account</span>
-      </Button>
+      <div className="flex items-center">
+        <Button variant="ghost" className="rounded-full p-2" aria-label="Account">
+          <User className="h-5 w-5 text-slate-500" />
+        </Button>
+      </div>
     </nav>
   );
 };
