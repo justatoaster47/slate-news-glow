@@ -153,6 +153,21 @@ econ-dashboard/
 *   `.DS_Store` (macOS specific).
 *   `*.pem`, `*.key` (Private keys).
 
+## During Implementation
+* At the end of every task and every sub-task, include how to verify that it was implemented successfully and is fully functional
+* At the end of every task, also include any actions that need to be taken externally, such as on the Supabase dashboard, Vercel dashboard, getting API keys, etc.
+* Avoid having files over 200-300 lines of code. Refactor at that point.
+* when i prompt you "fix thoroughly" and you know what the issue is do this: consider
+all potential fixes equally, remove any bias you have on what is already
+correct. search the web (use brave mcp) on stackoverflow, github issues, and
+any relevant documentation (find documentation links in instructions.md).
+write a reasoning paragraph for each potential fix you come across on why it
+will and will not work for our use case, our project, and the versions of the
+frameworks/langauges/etc we are using. rank these by which you believe is
+best. attempt the best one, and if this fails, remove any implementation you
+did in that attempt, then attempt the second best one. avoid repeating the
+same fixes to the same problem if you know they haven't worked before.
+
 ## Implementation Plan: Econ Dashboard (Slate News Glow)
 
 **Overall Goal:** Develop a functional web application that aggregates
