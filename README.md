@@ -1,73 +1,45 @@
-# Welcome to your Lovable project
 
-## Project info
+# Minimalist News Dashboard
 
-**URL**: https://lovable.dev/projects/63cd88c6-d04f-4389-8d54-0888e53a1165
+A clean, elegant news dashboard built with React, Tailwind CSS, and shadcn UI components.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- Clean, minimalist UI design
+- Category-based news navigation
+- Responsive layout that works on all devices
+- Custom color palette based on user preferences
+- Google Font's "Lato" for a modern, readable typography
 
-**Use Lovable**
+## Color Palette
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/63cd88c6-d04f-4389-8d54-0888e53a1165) and start prompting.
+The application uses a carefully selected color palette:
 
-Changes made via Lovable will be committed automatically to this repo.
+- E0E1DD (Light Gray)
+- 778DA9 (Light Blue Gray)
+- 415A77 (Medium Blue)
+- 1B263B (Dark Blue)
+- 0D1B2A (Darkest Blue)
 
-**Use your preferred IDE**
+## Design Reference
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+The design follows this minimalist sketch:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+![News Dashboard Sketch](./public/lovable-uploads/d5229fbd-6e95-41a7-b80c-359e1428e89e.png)
 
-Follow these steps:
+## Technologies Used
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- React
+- Tailwind CSS
+- shadcn UI components
+- Lucide React icons
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## Getting Started
 
-# Step 3: Install the necessary dependencies.
-npm i
+```bash
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the development server
 npm run dev
 ```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/63cd88c6-d04f-4389-8d54-0888e53a1165) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes it is!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
