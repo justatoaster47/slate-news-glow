@@ -173,25 +173,26 @@ core features like authentication, data display, and basic AI processing.
 *   **Task 1.2: Supabase Integration & Database Schema**
     *   Action: Set up a Supabase project via the Supabase dashboard.
     *   Action: Add Supabase Project URL and Anon Key to `.env.local` and list them in `.env.example`.
+    *   Action: Configure Supabase CLI tool for local development (Supabase login, link project, test connection).
     *   Action: Install Supabase client libraries: `npm install @supabase/supabase-js @supabase/auth-helpers-nextjs` (or equivalent using your package manager).
     *   Action: Create the Supabase client instance configuration file (`src/lib/supabaseClient.js` or similar) using the environment variables.
     *   Action: Define initial database schemas using the Supabase SQL editor or local migration files (if using Supabase CLI). Define tables like `data_sources` (for managing API source info/status) and maybe a placeholder `aggregated_data` (structure TBD based on specific data needs). Note: The `users` table is implicitly managed by Supabase Auth, but a `profiles` table might be useful for custom user data, linked via foreign key to `auth.users.id`.
     *   [Deliverable]: Functional Supabase instance connected, client libraries installed, client configured, required environment variables defined, initial core DB schema (SQL) created.
 
-*   **Task 1.3: User Authentication Implementation**
-    *   Action: Configure Supabase Auth settings in the Supabase dashboard, enabling the Email/Password provider. Customize email templates if desired.
-    *   Action: Create authentication pages/routes within the Next.js app structure (e.g., `src/app/(auth)/login/page.js`, `src/app/(auth)/signup/page.js`).
-    *   Action: Build UI forms for login and registration using pre-existing Shadcn components (`Input`, `Button`, `Label`, `Card`, etc.) within the auth pages.
-    *   Action: Integrate Supabase Auth client functions (`supabase.auth.signUp`, `supabase.auth.signInWithPassword`, `supabase.auth.signOut`) into the forms/pages. Consider using Next.js Server Actions for handling form submissions securely or implement client-side logic with appropriate loading/error states.
-    *   Action: Implement session management and route protection. Use Supabase Auth Helpers for Next.js (`createClientComponentClient`, `createServerComponentClient`, middleware) to manage user sessions across Server Components, Client Components, and API Routes/Server Actions. Protect the `/dashboard` route group.
-    *   [Deliverable]: Users can sign up, log in, log out securely. Dashboard access is restricted to authenticated users. Session state is managed consistently.
+<!-- *   **Task 1.3: User Authentication Implementation** -->
+<!--     *   Action: Configure Supabase Auth settings in the Supabase dashboard, enabling the Email/Password provider. Customize email templates if desired. -->
+<!--     *   Action: Create authentication pages/routes within the Next.js app structure (e.g., `src/app/(auth)/login/page.js`, `src/app/(auth)/signup/page.js`). -->
+<!--     *   Action: Build UI forms for login and registration using pre-existing Shadcn components (`Input`, `Button`, `Label`, `Card`, etc.) within the auth pages. -->
+<!--     *   Action: Integrate Supabase Auth client functions (`supabase.auth.signUp`, `supabase.auth.signInWithPassword`, `supabase.auth.signOut`) into the forms/pages. Consider using Next.js Server Actions for handling form submissions securely or implement client-side logic with appropriate loading/error states. -->
+<!--     *   Action: Implement session management and route protection. Use Supabase Auth Helpers for Next.js (`createClientComponentClient`, `createServerComponentClient`, middleware) to manage user sessions across Server Components, Client Components, and API Routes/Server Actions. Protect the `/dashboard` route group. -->
+<!--     *   [Deliverable]: Users can sign up, log in, log out securely. Dashboard access is restricted to authenticated users. Session state is managed consistently. -->
 
-*   **Task 1.4: Basic Layout & Navigation**
-    *   Action: Implement or refine the root layout (`src/app/layout.js`).
-    *   Action: Create or refine the dashboard layout (`src/app/dashboard/layout.js`) with placeholders for header/sidebar, ensuring it's protected by the authentication setup.
-    *   Action: Implement functional shared `Header` and `Sidebar` components (`src/components/shared/`) using Shadcn/Lucide components. Header should conditionally display user info/logout or login links. Sidebar should contain initial navigation links (even if just placeholders initially).
-    *   Action: Ensure layouts adapt based on authentication status.
-    *   [Deliverable]: Main application shell with persistent layout elements, basic navigation structure, responsive authentication state display, and protected dashboard area.
+<!-- *   **Task 1.4: Basic Layout & Navigation** -->
+<!--     *   Action: Implement or refine the root layout (`src/app/layout.js`). -->
+<!--     *   Action: Create or refine the dashboard layout (`src/app/dashboard/layout.js`) with placeholders for header/sidebar, ensuring it's protected by the authentication setup. -->
+<!--     *   Action: Implement functional shared `Header` and `Sidebar` components (`src/components/shared/`) using Shadcn/Lucide components. Header should conditionally display user info/logout or login links. Sidebar should contain initial navigation links (even if just placeholders initially). -->
+<!--     *   Action: Ensure layouts adapt based on authentication status. -->
+<!--     *   [Deliverable]: Main application shell with persistent layout elements, basic navigation structure, responsive authentication state display, and protected dashboard area. -->
 
 **Phase 2: Core Data Aggregation - Backend**
 **Goal:** Implement backend logic to fetch data from the *most critical* external APIs and establish a basic data handling strategy.
