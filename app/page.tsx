@@ -1,11 +1,12 @@
+'use client'; // This page uses state, so it must be a Client Component
 
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import CategorySection from '@/components/CategorySection';
 import Footer from '@/components/Footer';
-import { newsData } from '@/data/mockData';
+import { newsData } from '@/data/mockData'; // Assuming mockData is still used
 
-const Index = () => {
+export default function HomePage() {
   const [activeCategory, setActiveCategory] = useState<string>("tech");
 
   // Get the news items for the active category
@@ -14,13 +15,18 @@ const Index = () => {
   };
 
   // Get all categories from the data
-  const categories = Array.from(new Set(newsData.map(item => item.category)));
+  const categories = Array.from(new Set(newsData.map(item => item.category))); // This might be unused now?
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Navbar activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
+      {/* Pass categories to Navbar if needed */}
+      <Navbar activeCategory={activeCategory} setActiveCategory={setActiveCategory} /* categories={categories} */ /> 
       
       <main className="flex-1 container mx-auto px-4 py-6">
+        {/* 
+          Consider fetching data server-side if possible in the future.
+          For now, keep the client-side filtering based on state.
+        */}
         {activeCategory === "tech" && (
           <CategorySection category="tech" newsItems={getNewsForCategory("tech")} />
         )}
@@ -38,6 +44,4 @@ const Index = () => {
       <Footer />
     </div>
   );
-};
-
-export default Index;
+} 
