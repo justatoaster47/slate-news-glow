@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { User } from 'lucide-react';
 
-// Navigation categories
-const categories = ["tech", "econ", "policy", "geopolitical"];
+// Navigation categories - Added 'science'
+const categories = ["tech", "econ", "general", "science", "policy", "geopolitical"];
 
 interface NavbarProps {
   currentCategory?: string;

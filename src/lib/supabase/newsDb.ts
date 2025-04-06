@@ -41,9 +41,7 @@ interface NewsArticleRecord {
 // -------------------------
 
 // Define the categories to fetch news for
-const NEWS_CATEGORIES = ['technology', 'business', 'general', 'science', 'health', 'sports', 'entertainment']; 
-// Adjusted categories based on NewsAPI documentation - 'econ' is often 'business', 'policy' maps loosely to 'general' or specific keywords
-// Using 'technology' instead of 'tech' as per NewsAPI standard categories.
+const NEWS_CATEGORIES_TO_FETCH = ['technology', 'business', 'general', 'science'];
 
 /**
  * Fetches news for predefined categories from NewsAPI and stores/updates them in the Supabase database.
@@ -56,7 +54,7 @@ export const fetchAndStoreNews = async (): Promise<{ success: boolean; message: 
   let categoriesProcessed = 0;
   const errors: { category: string; error: string }[] = [];
 
-  for (const category of NEWS_CATEGORIES) {
+  for (const category of NEWS_CATEGORIES_TO_FETCH) {
     console.log(`Fetching news for category: ${category}...`);
     try {
       // Fetch (Assume fetchTopHeadlines returns Promise<NewsApiResponse>)
@@ -124,7 +122,7 @@ export const fetchAndStoreNews = async (): Promise<{ success: boolean; message: 
   }
 
   console.log('Finished news fetch and store process.');
-  const finalMessage = `Processed ${categoriesProcessed}/${NEWS_CATEGORIES.length} categories.`;
+  const finalMessage = `Processed ${categoriesProcessed}/${NEWS_CATEGORIES_TO_FETCH.length} categories.`;
   if (errors.length > 0) {
     return {
       success: false,
