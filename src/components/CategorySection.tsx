@@ -1,17 +1,20 @@
-
 import React from 'react';
 import NewsCard from './NewsCard';
 import { Laptop, Landmark, Building2, Globe } from 'lucide-react';
 
+// Define the expected shape of a news item, matching NewsCard props
+interface NewsItem {
+  id: string; // Assuming API provides a unique ID
+  title: string;
+  summary: string; // Or description from API, used as summary for now
+  source?: string;
+  publishedAt?: string; // Changed from time
+  url?: string; // Added URL
+}
+
 interface CategorySectionProps {
   category: string;
-  newsItems: {
-    id: string;
-    title: string;
-    summary: string;
-    source?: string;
-    time?: string;
-  }[];
+  newsItems: NewsItem[]; // Use the defined interface
 }
 
 const CategorySection = ({ category, newsItems }: CategorySectionProps) => {
@@ -41,9 +44,10 @@ const CategorySection = ({ category, newsItems }: CategorySectionProps) => {
           <NewsCard
             key={item.id}
             title={item.title}
-            summary={item.summary}
+            summary={item.summary} // Using description/summary from API
             source={item.source}
-            time={item.time}
+            publishedAt={item.publishedAt} // Pass publishedAt
+            url={item.url} // Pass url
           />
         ))}
       </div>

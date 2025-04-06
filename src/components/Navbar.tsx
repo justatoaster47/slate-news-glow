@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import Link from 'next/link';
 import { Button } from "@/components/ui/button";
 import { User } from 'lucide-react';
 
@@ -6,29 +9,31 @@ import { User } from 'lucide-react';
 const categories = ["tech", "econ", "policy", "geopolitical"];
 
 interface NavbarProps {
-  activeCategory: string;
-  setActiveCategory: (category: string) => void;
+  currentCategory?: string;
 }
 
-const Navbar = ({ activeCategory, setActiveCategory }: NavbarProps) => {
+const Navbar = ({ currentCategory = 'tech' }: NavbarProps) => {
   return (
     <nav className="w-full flex justify-between items-center py-4 px-6 border-b border-slate-200">
       <div className="flex items-center">
-        <span className="text-xl font-bold text-gray-800">News Dashboard</span>
+        <Link href="/" className="text-xl font-bold text-gray-800">
+           News Dashboard
+        </Link>
       </div>
       <div className="flex justify-center space-x-2 items-center">
         {categories.map((category) => (
-          <button
+          <Link
             key={category}
-            onClick={() => setActiveCategory(category)}
+            href={`/?category=${category}`}
             className={`px-4 py-1 rounded-full text-sm font-medium transition-colors duration-150 capitalize ${
-              activeCategory === category
+              currentCategory === category
                 ? 'bg-slate-200 text-slate-900'
                 : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
             }`}
+            passHref
           >
             {category}
-          </button>
+          </Link>
         ))}
       </div>
       <div className="flex items-center">

@@ -168,6 +168,7 @@ best. attempt the best one, and if this fails, remove any implementation you
 did in that attempt, then attempt the second best one. avoid repeating the
 same fixes to the same problem if you know they haven't worked before.
 
+
 ## Implementation Plan: Econ Dashboard (Slate News Glow)
 
 **Overall Goal:** Develop a functional web application that aggregates
@@ -175,16 +176,15 @@ financial and economic data, applies AI for insights, and presents it in a
 consolidated dashboard for stock traders and business analysts, including
 core features like authentication, data display, and basic AI processing.
 
+### Completed Phases
 **Phase 1: Foundation & Core Authentication**
 **Goal:** Solidify the project setup, establish database connection, implement robust user authentication, and create the main application layout.
-
 *   **Task 1.1: Project Setup & Configuration Verification**
     *   Action: Verify existing Next.js, Tailwind CSS, and Shadcn/ui setup is correct and functional.
     *   Action: Create/Verify a standard `.gitignore` file suitable for a Next.js/Supabase project (ensure `node_modules`, `.next`, `.env*` etc., are ignored).
     *   Action: Create environment file templates: `.env.local` (for local secrets, ignored by git) and `.env.example` (listing required variables, committed to git).
     *   Action: Ensure ESLint, Prettier configurations are active for code consistency.
     *   [Deliverable]: Verified base project structure, standard `.gitignore`, environment file templates (`.env.local`, `.env.example`).
-
 *   **Task 1.2: Supabase Integration & Database Schema**
     *   Action: Set up a Supabase project via the Supabase dashboard.
     *   Action: Add Supabase Project URL and Anon Key to `.env.local` and list them in `.env.example`.
@@ -193,7 +193,6 @@ core features like authentication, data display, and basic AI processing.
     *   Action: Create the Supabase client instance configuration file (`src/lib/supabaseClient.js` or similar) using the environment variables.
     *   Action: Define initial database schemas using the Supabase SQL editor or local migration files (if using Supabase CLI). Define tables like `data_sources` (for managing API source info/status) and maybe a placeholder `aggregated_data` (structure TBD based on specific data needs). Note: The `users` table is implicitly managed by Supabase Auth, but a `profiles` table might be useful for custom user data, linked via foreign key to `auth.users.id`.
     *   [Deliverable]: Functional Supabase instance connected, client libraries installed, client configured, required environment variables defined, initial core DB schema (SQL) created.
-
 <!-- *   **Task 1.3: User Authentication Implementation** -->
 <!--     *   Action: Configure Supabase Auth settings in the Supabase dashboard, enabling the Email/Password provider. Customize email templates if desired. -->
 <!--     *   Action: Create authentication pages/routes within the Next.js app structure (e.g., `src/app/(auth)/login/page.js`, `src/app/(auth)/signup/page.js`). -->
@@ -201,51 +200,46 @@ core features like authentication, data display, and basic AI processing.
 <!--     *   Action: Integrate Supabase Auth client functions (`supabase.auth.signUp`, `supabase.auth.signInWithPassword`, `supabase.auth.signOut`) into the forms/pages. Consider using Next.js Server Actions for handling form submissions securely or implement client-side logic with appropriate loading/error states. -->
 <!--     *   Action: Implement session management and route protection. Use Supabase Auth Helpers for Next.js (`createClientComponentClient`, `createServerComponentClient`, middleware) to manage user sessions across Server Components, Client Components, and API Routes/Server Actions. Protect the `/dashboard` route group. -->
 <!--     *   [Deliverable]: Users can sign up, log in, log out securely. Dashboard access is restricted to authenticated users. Session state is managed consistently. -->
-
 <!-- *   **Task 1.4: Basic Layout & Navigation** -->
 <!--     *   Action: Implement or refine the root layout (`src/app/layout.js`). -->
 <!--     *   Action: Create or refine the dashboard layout (`src/app/dashboard/layout.js`) with placeholders for header/sidebar, ensuring it's protected by the authentication setup. -->
 <!--     *   Action: Implement functional shared `Header` and `Sidebar` components (`src/components/shared/`) using Shadcn/Lucide components. Header should conditionally display user info/logout or login links. Sidebar should contain initial navigation links (even if just placeholders initially). -->
 <!--     *   Action: Ensure layouts adapt based on authentication status. -->
 <!--     *   [Deliverable]: Main application shell with persistent layout elements, basic navigation structure, responsive authentication state display, and protected dashboard area. -->
-
 **Phase 2: Core Data Aggregation - Backend**
 **Goal:** Implement backend logic to fetch data from the *most critical* external APIs and establish a basic data handling strategy.
-
 *   **Task 2.1: API Client Library (`src/lib/api-clients/`)**
     *   Action: Create modular functions/classes to interact with the initial set of external APIs: NewsAPI, Alpha Vantage (or FMP), SEC EDGAR API. Add necessary API keys to `.env.local` / `.env.example`.
     *   Action: Handle API key injection securely from environment variables.
     *   Action: Implement basic error handling and logging for API requests.
     *   [Deliverable]: Reusable library functions for fetching data from core APIs.
-
 *   **Task 2.2: Data Fetching Server Logic (News)**
     *   Action: Create a Next.js Route Handler (e.g., `src/app/api/news/route.js`) or Server Action to fetch news using the NewsAPI client.
     *   Action: Define parameters (e.g., keywords, sources) for fetching relevant news.
     *   Action: Define the data structure (TypeScript interface or shape) for news articles.
     *   [Deliverable]: Backend endpoint/action capable of fetching news data.
-
 *   **Task 2.3: Data Fetching Server Logic (Stocks)**
     *   Action: Create a Route Handler or Server Action to fetch stock quotes/basic data using Alpha Vantage/FMP client.
     *   Action: Define parameters (e.g., stock symbols).
     *   Action: Define the data structure for stock data.
     *   [Deliverable]: Backend endpoint/action capable of fetching basic stock data.
-
 *   **Task 2.4: Data Fetching Server Logic (SEC Filings)**
     *   Action: Create a Route Handler or Server Action to fetch a list of recent SEC filings metadata using the SEC API client.
     *   Action: Focus on retrieving metadata (company name, CIK, form type, filing date, link).
     *   Action: Define the data structure for filing metadata.
     *   [Deliverable]: Backend endpoint/action capable of fetching recent SEC filing metadata.
-
 *   **Task 2.5: Initial Data Caching/Storage Strategy**
     *   Action: Implement basic caching for API responses using Next.js fetch cache options (`cache: 'force-cache'`, `revalidate`) or Vercel Data Cache.
     *   Action: Define strategy for persisting fetched data (e.g., news articles, filing metadata) into Supabase tables if needed for history, analysis, or avoiding repeated fetches. Implement basic Supabase insert/upsert logic within backend fetchers if persistence is required.
     *   [Deliverable]: Basic caching implemented. Strategy and potential implementation for storing fetched data in Supabase.
 
+
+### In Progress Phases
 **Phase 3: Basic Dashboard Implementation**
 **Goal:** Display the fetched core data sets on the dashboard in a user-friendly manner.
 
 *   **Task 3.1: Dashboard Page Structure (`src/app/dashboard/page.js`)**
-    *   Action: Design the main dashboard layout grid using CSS Grid or Flexbox.
+    <!-- *   Action: Design the main dashboard layout grid using CSS Grid or Flexbox. -->
     *   Action: Use Server Components to fetch initial data via the backend logic created in Phase 2 (or trigger client-side fetches if more dynamic interaction is needed).
     *   Action: Implement loading states using Next.js `loading.js` files or React Suspense boundaries.
     *   Action: Implement basic error handling display (e.g., Shadcn `Alert` component for "Failed to load data").

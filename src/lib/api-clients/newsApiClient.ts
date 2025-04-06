@@ -24,16 +24,28 @@ export const fetchTopHeadlines = async (params: Record<string, string | number> 
     pageSize: 20,    // Limit page size
   };
 
-  const requestParams = { ...defaultParams, ...params };
+  // Combine default and incoming params
+  const combinedParams = { ...defaultParams, ...params };
+
+  // --- TEMPORARY MODIFICATION: Remove category to fetch general news ---
+  // Create a copy with a flexible type to allow accessing/deleting category
+  const requestParams: Record<string, any> = { ...combinedParams }; 
+  if (requestParams.category) {
+      console.log(`[newsApiClient] Temporarily removing category: ${requestParams.category} to fetch general news.`);
+      delete requestParams.category; 
+  }
+  // --------------------------------------------------------------------
 
   try {
     const response = await axios.get(`${NEWS_API_BASE_URL}/top-headlines`, {
       headers: {
         'X-Api-Key': NEWS_API_KEY,
       },
-      params: requestParams,
+      params: requestParams, // Use the modified params without category
     });
     console.log(`Fetched top headlines with params: ${JSON.stringify(requestParams)}`);
+    // Log the actual data received from NewsAPI before returning
+    console.log('[newsApiClient] Raw NewsAPI Response Data:', JSON.stringify(response.data, null, 2));
     // The response.data object contains status, totalResults, and articles array.
     return response.data; 
   } catch (error) {
