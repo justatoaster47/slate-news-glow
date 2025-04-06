@@ -12,8 +12,5 @@ if (!supabaseAnonKey) {
   throw new Error('Missing environment variable: NEXT_PUBLIC_SUPABASE_ANON_KEY');
 }
 
-// Create and export the Supabase client instance
-// We are *not* using the auth helpers here initially as we are skipping auth setup for now.
-// If auth is added later, this might need to be replaced or supplemented with
-// createServerComponentClient, createClientComponentClient, etc.
+// Create and export the Supabase client instance for client-side/anon usage.
 export const supabase = createClient(supabaseUrl, supabaseAnonKey); 

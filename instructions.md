@@ -245,20 +245,20 @@ core features like authentication, data display, and basic AI processing.
     *   Action: Implement basic error handling display (e.g., Shadcn `Alert` component for "Failed to load data").
     *   [Deliverable]: Dashboard page structure capable of loading and displaying data components with appropriate loading/error states.
 
-*   **Task 3.2: News Feed Component**
-    *   Action: Create a `NewsFeed` component (`src/components/dashboard/NewsFeed.js`) using Shadcn `Card` components or similar layout structures.
-    *   Action: Display fetched news articles (title, source, publication date, link to original). Add placeholder for AI summary.
-    *   [Deliverable]: A widget displaying a list of recent news articles on the dashboard.
+<!-- *   **Task 3.2: News Feed Component** -->
+<!--     *   Action: Create a `NewsFeed` component (`src/components/dashboard/NewsFeed.js`) using Shadcn `Card` components or similar layout structures. -->
+<!--     *   Action: Display fetched news articles (title, source, publication date, link to original). Add placeholder for AI summary. -->
+<!--     *   [Deliverable]: A widget displaying a list of recent news articles on the dashboard. -->
 
-*   **Task 3.3: Stock Ticker/Watchlist Component (Basic)**
-    *   Action: Create a `StockTicker` component (`src/components/dashboard/StockTicker.js`).
-    *   Action: Display basic quote data (price, change) for a predefined list of stocks (e.g., major indices) fetched via the backend logic.
-    *   [Deliverable]: A widget displaying basic stock information for predefined symbols.
+<!-- *   **Task 3.3: Stock Ticker/Watchlist Component (Basic)** -->
+<!--     *   Action: Create a `StockTicker` component (`src/components/dashboard/StockTicker.js`). -->
+<!--     *   Action: Display basic quote data (price, change) for a predefined list of stocks (e.g., major indices) fetched via the backend logic. -->
+<!--     *   [Deliverable]: A widget displaying basic stock information for predefined symbols. -->
 
-*   **Task 3.4: Recent Filings Component**
-    *   Action: Create a `RecentFilings` component (`src/components/dashboard/RecentFilings.js`).
-    *   Action: Display the list of fetched SEC filing metadata (company, form type, date, link) using Shadcn `Table` or `Card` components.
-    *   [Deliverable]: A widget displaying recent SEC filings.
+<!-- *   **Task 3.4: Recent Filings Component** -->
+<!--     *   Action: Create a `RecentFilings` component (`src/components/dashboard/RecentFilings.js`). -->
+<!--     *   Action: Display the list of fetched SEC filing metadata (company, form type, date, link) using Shadcn `Table` or `Card` components. -->
+<!--     *   [Deliverable]: A widget displaying recent SEC filings. -->
 
 **Phase 4: Core AI Integration**
 **Goal:** Integrate basic AI capabilities, starting with text summarization for news articles.
