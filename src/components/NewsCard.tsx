@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 interface NewsCardProps {
   title: string;
-  summary: string; // Placeholder for future AI summary
+  summary: string; // This will now receive either the AI summary or the original description
   source?: string;
   publishedAt?: string; // Changed from time
   url?: string; // Added URL prop

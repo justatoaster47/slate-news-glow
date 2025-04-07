@@ -14,6 +14,7 @@ interface DbNewsArticle {
   description?: string | null;
   source_name?: string | null; // Renamed from source.name
   published_at: string; 
+  summary?: string | null; // Add the summary field
 }
 
 // Structure for searchParams passed to the page
@@ -31,7 +32,7 @@ async function fetchNewsFromDb(category: string): Promise<DbNewsArticle[]> {
   try {
     const { data, error } = await supabase
       .from('news_articles')
-      .select('id, url, title, description, source_name, published_at') // Select required fields
+      .select('id, url, title, description, source_name, published_at, summary') // Select required fields
       .eq('category', category) // Filter by category
       .order('published_at', { ascending: false }) // Order by newest first
       .limit(30); // Limit the number of articles displayed per category
@@ -90,7 +91,7 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   const newsItemsForSection = categoryNewsData.map(item => ({
     id: item.url, 
     title: item.title,
-    summary: item.description ?? '', 
+    summary: item.summary ?? item.description ?? '', 
     source: item.source_name ?? 'Source unavailable',
     publishedAt: item.published_at, 
     url: item.url,

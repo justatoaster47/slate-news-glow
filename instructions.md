@@ -153,7 +153,7 @@ econ-dashboard/
 *   `.DS_Store` (macOS specific).
 *   `*.pem`, `*.key` (Private keys).
 
-## During Implementation
+## Best Practices During Implementation
 * At the end of every task and every sub-task, include how to verify that it was implemented successfully and is fully functional
 * At the end of every task, also include any actions that need to be taken externally, such as on the Supabase dashboard, Vercel dashboard, getting API keys, etc.
 * Avoid having files over 200-300 lines of code. Refactor at that point.
@@ -167,6 +167,12 @@ frameworks/langauges/etc we are using. rank these by which you believe is
 best. attempt the best one, and if this fails, remove any implementation you
 did in that attempt, then attempt the second best one. avoid repeating the
 same fixes to the same problem if you know they haven't worked before.
+* DO NOT DO TASKS THAT ARE COMMENTED OUT: <!-- --> (this notation)
+* only implement the changes i've asked for, that my request is directly
+dependent upon, or that are a clear and obvious improvement. do not touch
+the codebase outside of where is necessary for the current task, try to keep
+all your changes localized to a few files to keep debugging easy and the
+architecture more modularized.
 
 
 ## Implementation Plan: Econ Dashboard (Slate News Glow)
@@ -232,9 +238,6 @@ core features like authentication, data display, and basic AI processing.
     *   Action: Implement basic caching for API responses using Next.js fetch cache options (`cache: 'force-cache'`, `revalidate`) or Vercel Data Cache.
     *   Action: Define strategy for persisting fetched data (e.g., news articles, filing metadata) into Supabase tables if needed for history, analysis, or avoiding repeated fetches. Implement basic Supabase insert/upsert logic within backend fetchers if persistence is required.
     *   [Deliverable]: Basic caching implemented. Strategy and potential implementation for storing fetched data in Supabase.
-
-
-### In Progress Phases
 **Phase 3: Basic Dashboard Implementation**
 **Goal:** Display the fetched core data sets on the dashboard in a user-friendly manner.
 
@@ -259,6 +262,8 @@ core features like authentication, data display, and basic AI processing.
 <!--     *   Action: Create a `RecentFilings` component (`src/components/dashboard/RecentFilings.js`). -->
 <!--     *   Action: Display the list of fetched SEC filing metadata (company, form type, date, link) using Shadcn `Table` or `Card` components. -->
 <!--     *   [Deliverable]: A widget displaying recent SEC filings. -->
+
+### In Progress Phases
 
 **Phase 4: Core AI Integration**
 **Goal:** Integrate basic AI capabilities, starting with text summarization for news articles.

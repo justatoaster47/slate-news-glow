@@ -1,5 +1,7 @@
 import { fetchTopHeadlines } from '@/lib/api-clients/newsApiClient';
 import { getSupabaseAdminClient } from '@/lib/supabase/serverClient';
+// Import the named export from the TypeScript module
+import { summarizeText } from '@/services/analysis/aiService'; // No .ts extension needed
 
 // --- Type Definitions ---
 
@@ -36,6 +38,7 @@ interface NewsArticleRecord {
   published_at: string; 
   content?: string | null;
   category: string;
+  summary?: string | null; // Add the summary field
 }
 
 // -------------------------
@@ -57,61 +60,95 @@ export const fetchAndStoreNews = async (): Promise<{ success: boolean; message: 
   for (const category of NEWS_CATEGORIES_TO_FETCH) {
     console.log(`Fetching news for category: ${category}...`);
     try {
-      // Fetch (Assume fetchTopHeadlines returns Promise<NewsApiResponse>)
+      // Fetch
       const newsApiResponse = await fetchTopHeadlines({
         country: 'us',
         category: category,
-        pageSize: 100,
+        pageSize: 100, // Fetch more articles if planning to summarize
       });
 
-      // Use the defined type
       const articles = newsApiResponse?.articles;
-      if (!Array.isArray(articles)) {
-        console.warn(`No articles array found or invalid format for category: ${category}. Status: ${newsApiResponse?.status}`);
+      if (!Array.isArray(articles) || articles.length === 0) {
+        console.log(`No articles returned or invalid format for category: ${category}.`);
         continue; 
       }
 
-      if (articles.length === 0) {
-        console.log(`No articles returned from NewsAPI for category: ${category}. (Total Results: ${newsApiResponse?.totalResults})`);
-        continue; 
-      }
+      console.log(`Received ${articles.length} articles for category: ${category}. Preparing for summarization and upsert...`);
 
-      console.log(`Received ${articles.length} articles for category: ${category}. Preparing for upsert...`);
+      // Map API response and generate summaries concurrently
+      const recordsToUpsertPromises = articles.map(async (article: NewsApiArticle): Promise<NewsArticleRecord | null> => {
+        // Basic validation for essential fields
+        if (!article.url || !article.publishedAt || !article.title) {
+          console.warn(`Skipping article due to missing essential fields (URL, publishedAt, title): ${article.url || article.title || 'Unknown Article'}`);
+          return null;
+        }
+          
+        // Determine text for summarization (prioritize content -> description -> title)
+        const textToSummarize = article.content || article.description || article.title; // Added title as fallback
+        let summary: string | null = null;
 
-      // Map API response 
-      const recordsToUpsert: NewsArticleRecord[] = articles.map((article: NewsApiArticle) => ({
-        url: article.url,
-        source_id: article.source?.id,
-        source_name: article.source?.name,
-        author: article.author,
-        title: article.title || 'No Title Provided',
-        description: article.description,
-        url_to_image: article.urlToImage,
-        published_at: article.publishedAt, 
-        content: article.content,
-        category: category,
-      })).filter(record => record.url && record.published_at && record.title);
+        // Attempt summarization if any text is available (removed length check)
+        if (textToSummarize && textToSummarize.trim().length > 0) { 
+          try {
+            // Optional: Add a warning if summarizing very short text, but proceed
+            if (textToSummarize.trim().length <= 50) {
+                console.warn(`Text for summarization is very short (<= 50 chars) for article: "${article.title}". Proceeding anyway.`);
+            }
+            console.log(`Attempting to summarize article: ${article.title.substring(0, 50)}...`);
+            summary = await summarizeText(textToSummarize);
+            if (!summary) {
+                console.warn(`Summarization returned null for article: ${article.title}`);
+            } else {
+                console.log(`Successfully summarized article: ${article.title.substring(0, 50)}...`);
+            }
+          } catch (summaryError) {
+            console.error(`Error summarizing article "${article.title}":`, summaryError);
+            // Proceed without summary if AI call fails
+          }
+        } else {
+            // This case should now be rare (only if title is also missing/empty)
+            console.log(`Skipping summarization for article (no content/description/title): ${article.title || article.url}`);
+        }
+          
+        // Construct the record for Supabase
+        return {
+          url: article.url,
+          source_id: article.source?.id,
+          source_name: article.source?.name,
+          author: article.author,
+          title: article.title, // Already checked non-null above
+          description: article.description,
+          url_to_image: article.urlToImage,
+          published_at: article.publishedAt, // Already checked non-null above
+          content: article.content, // Keep original content if needed elsewhere
+          category: category,
+          summary: summary, // Add the generated summary (or null)
+        };
+      });
+
+      // Wait for all summarization attempts and filter out nulls (from validation skips)
+      const recordsToUpsert = (await Promise.all(recordsToUpsertPromises)).filter(record => record !== null) as NewsArticleRecord[];
 
       if (recordsToUpsert.length === 0) {
-          console.log(`No valid records to upsert after filtering for category: ${category}.`);
+          console.log(`No valid records to upsert after filtering and summarization for category: ${category}.`);
           continue;
       }
+      
+      console.log(`Attempting to upsert ${recordsToUpsert.length} articles with summaries for category: ${category}.`);
 
       // Upsert data into Supabase
       const { error } = await supabaseAdmin
         .from('news_articles')
         .upsert(recordsToUpsert, {
           onConflict: 'url', 
-          ignoreDuplicates: false,
+          ignoreDuplicates: false, 
         });
-        // Removed problematic .select({ count: 'exact' })
 
       if (error) {
         console.error(`Supabase upsert error for category ${category}:`, error);
         errors.push({ category, error: error.message });
       } else {
-        console.log(`Successfully completed upsert for ${recordsToUpsert.length} potential articles for category: ${category}.`);
-        // We don't get the exact count of *new* vs *updated* easily without select
+        console.log(`Successfully completed upsert for ${recordsToUpsert.length} articles for category: ${category}.`);
         categoriesProcessed++; 
       }
 
