@@ -1,6 +1,5 @@
 
 ## Project Overview
-
 The **econ dashboard web app** is a specialized intelligence platform
 designed for **stock traders and business analysts**. It aims to provide a
 competitive edge by aggregating data from diverse global and financial
@@ -12,7 +11,6 @@ timely, and actionable intelligence relevant to economic impact and business
 strategy, facilitating faster and more informed decision-making.
 
 ## Core Features
-
 | **Feature**                      | **Description**                                                                                                                               |
 |---------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
 | **Multi-Source Data Aggregation** | Automatically pulls and updates data from configured sources like SEC EDGAR, FRED, financial APIs (Stock/Fundamentals), and News APIs.       |
@@ -26,11 +24,9 @@ strategy, facilitating faster and more informed decision-making.
 | **(Suggested) Source Bias Indicator** | (Future Goal Refinement) Develop and display a potential bias score or indicator for news sources based on historical reporting patterns.    |
 
 ## Stack / Packages + Links to Documentation URLs
-
 Version Control
   Git: Distributed version control system.
     Documentation URL: https://git-scm.com/doc
-
 Frontend Stack
   Next.js: React framework for building user interfaces and server-side logic. Using App Router and Turbopack (Rust-based bundler).
     Documentation URL: https://nextjs.org/docs
@@ -45,14 +41,12 @@ Frontend Stack
   Axios / Fetch API: For client-side API requests (alternative/complement to Next.js Server Actions/Route Handlers).
     Axios Docs: https://axios-http.com/docs/intro
     Fetch API Docs: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
-
 Backend & Database
   Supabase: Backend-as-a-Service platform using PostgreSQL, providing database, authentication, and storage.
     Documentation URL: https://supabase.com/docs
   Next.js API Routes / Server Actions: For backend logic hosted within the Next.js application.
     API Routes Docs: https://nextjs.org/docs/app/building-your-application/routing/route-handlers
     Server Actions Docs: https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions
-
 Deployment
   Vercel: Platform for deploying the Next.js frontend and serverless functions.
     Documentation URL: https://vercel.com/docs
@@ -60,7 +54,6 @@ Deployment
     (Covered by Supabase Docs above)
 
 ## EXTERNAL ASSETS
-
 **API's:**
   1.  **SEC EDGAR (via SEC API):** Official company filings.
       *   Docs: [https://www.sec.gov/edgar/sec-api-documentation](https://www.sec.gov/edgar/sec-api-documentation)
@@ -88,7 +81,6 @@ Deployment
       *   Docs: [https://api.usaspending.gov/](https://api.usaspending.gov/)
 
 ## File Structure & Architecture
-
 econ-dashboard/
 │
 ├── public/                # Static assets (images, fonts, manifest.json)
@@ -176,7 +168,6 @@ architecture more modularized.
 
 
 ## Implementation Plan: Econ Dashboard (Slate News Glow)
-
 **Overall Goal:** Develop a functional web application that aggregates
 financial and economic data, applies AI for insights, and presents it in a
 consolidated dashboard for stock traders and business analysts, including
@@ -240,50 +231,41 @@ core features like authentication, data display, and basic AI processing.
     *   [Deliverable]: Basic caching implemented. Strategy and potential implementation for storing fetched data in Supabase.
 **Phase 3: Basic Dashboard Implementation**
 **Goal:** Display the fetched core data sets on the dashboard in a user-friendly manner.
-
 *   **Task 3.1: Dashboard Page Structure (`src/app/dashboard/page.js`)**
     <!-- *   Action: Design the main dashboard layout grid using CSS Grid or Flexbox. -->
     *   Action: Use Server Components to fetch initial data via the backend logic created in Phase 2 (or trigger client-side fetches if more dynamic interaction is needed).
     *   Action: Implement loading states using Next.js `loading.js` files or React Suspense boundaries.
     *   Action: Implement basic error handling display (e.g., Shadcn `Alert` component for "Failed to load data").
     *   [Deliverable]: Dashboard page structure capable of loading and displaying data components with appropriate loading/error states.
-
 <!-- *   **Task 3.2: News Feed Component** -->
 <!--     *   Action: Create a `NewsFeed` component (`src/components/dashboard/NewsFeed.js`) using Shadcn `Card` components or similar layout structures. -->
 <!--     *   Action: Display fetched news articles (title, source, publication date, link to original). Add placeholder for AI summary. -->
 <!--     *   [Deliverable]: A widget displaying a list of recent news articles on the dashboard. -->
-
 <!-- *   **Task 3.3: Stock Ticker/Watchlist Component (Basic)** -->
 <!--     *   Action: Create a `StockTicker` component (`src/components/dashboard/StockTicker.js`). -->
 <!--     *   Action: Display basic quote data (price, change) for a predefined list of stocks (e.g., major indices) fetched via the backend logic. -->
 <!--     *   [Deliverable]: A widget displaying basic stock information for predefined symbols. -->
-
 <!-- *   **Task 3.4: Recent Filings Component** -->
 <!--     *   Action: Create a `RecentFilings` component (`src/components/dashboard/RecentFilings.js`). -->
 <!--     *   Action: Display the list of fetched SEC filing metadata (company, form type, date, link) using Shadcn `Table` or `Card` components. -->
 <!--     *   [Deliverable]: A widget displaying recent SEC filings. -->
-
-### In Progress Phases
-
 **Phase 4: Core AI Integration**
 **Goal:** Integrate basic AI capabilities, starting with text summarization for news articles.
-
 *   **Task 4.1: AI Service Integration (`src/services/analysis/`)**
     *   Action: Choose an AI provider API (e.g., OpenAI, Anthropic, Gemini) and sign up for an API key. Add the key to `.env.local` / `.env.example`.
     *   Action: Create a service function (e.g., `summarizeText(text)` in `src/services/analysis/aiService.js`) to interact securely with the chosen AI API, using the key from environment variables.
     *   [Deliverable]: Backend service function capable of sending text to an AI API and receiving a summary.
-
 *   **Task 4.2: News Summarization Implementation**
     *   Action: Modify the news data fetching/processing logic (e.g., in the Route Handler/Server Action or a separate processing step). Trigger the summarization service for fetched articles. Consider cost/performance implications (summarize on fetch vs. on demand).
     *   Action: Store the generated summary alongside the news article data (in cache or Supabase DB). Update the corresponding schema if storing in DB.
     *   Action: Update the `NewsFeed` component (`src/components/dashboard/NewsFeed.js`) to display the AI-generated summary if available.
     *   [Deliverable]: News articles displayed on the dashboard include AI-generated summaries.
+<!-- *   **Task 4.3: (Optional) Basic Sentiment Analysis** -->
+<!--     *   Action: If feasible, extend the `aiService.js` to perform sentiment analysis on news headlines/summaries. -->
+<!--     *   Action: Store/display sentiment score (e.g., positive/negative/neutral icon or text). -->
+<!--     *   [Deliverable]: News items potentially display a sentiment indicator. -->
 
-*   **Task 4.3: (Optional) Basic Sentiment Analysis**
-    *   Action: If feasible, extend the `aiService.js` to perform sentiment analysis on news headlines/summaries.
-    *   Action: Store/display sentiment score (e.g., positive/negative/neutral icon or text).
-    *   [Deliverable]: News items potentially display a sentiment indicator.
-
+### Phases In Progress 
 **Phase 5: Dashboard Enhancement & Filtering**
 **Goal:** Improve dashboard usability with filtering, add more data sources (economic indicators), and introduce basic charting.
 
