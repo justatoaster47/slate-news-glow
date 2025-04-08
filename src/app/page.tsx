@@ -4,7 +4,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { supabase } from '@/lib/supabase/client'; // Import the basic Supabase client
 import { NewsItem } from '@/lib/types'; // Import the shared NewsItem type
-import DashboardContent from '@/components/DashboardContent'; // Import the new wrapper
+// Remove DashboardContent import, import PageClientWrapper
+// import DashboardContent from '@/components/DashboardContent'; 
+import PageClientWrapper from './PageClientWrapper'; // Import the new client wrapper
 
 // --- Type Definitions ---
 
@@ -27,7 +29,7 @@ async function fetchNewsFromDb(category: string): Promise<NewsItem[]> {
   try {
     const { data, error } = await supabase
       .from('news_articles')
-      .select('id, url, title, description, source_name, published_at, summary') // Select required fields
+      .select('id, url, title, description, source_name, published_at, summary, category') // Select required fields
       .eq('category', category) // Filter by category
       .order('published_at', { ascending: false }) // Order by newest first
       .limit(30); // Limit the number of articles displayed per category
@@ -49,7 +51,7 @@ async function fetchNewsFromDb(category: string): Promise<NewsItem[]> {
       publishedAt: item.published_at,
       description: item.description, // Keep original fields if needed elsewhere
       source_name: item.source_name,
-      category: category, // Add category for potential use
+      category: item.category, // Keep category from DB
     }));
 
     return mappedData;
@@ -104,10 +106,11 @@ export default async function HomePage({ searchParams }: HomePageProps) {
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Navbar currentCategory={urlCategory} />
+      {/* Render Navbar directly */}
+      <Navbar currentCategory={urlCategory} /> 
       <main className="flex-1 container mx-auto px-4 py-6">
-        {/* Use DashboardContent wrapper */}
-        <DashboardContent
+        {/* Use PageClientWrapper to manage state and render DashboardContent */}
+        <PageClientWrapper
           initialCategory={dbCategory} // Pass the resolved DB category name
           initialNewsItems={categoryNewsData} // Pass the fetched data directly
         />

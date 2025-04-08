@@ -11,8 +11,8 @@ interface NewsCardProps {
   publishedAt?: string; // Changed from time
   url?: string; // Added URL prop
   // --- Interaction Props --- 
-  isSelectable?: boolean; // Can this card be clicked in the current mode?
-  isSelected?: boolean;   // Is this card currently the selected one?
+  isSelectable?: boolean; // Can this card be clicked to initiate analysis?
+  isAnalyzed?: boolean;   // Is this card currently the one being analyzed?
   onClick?: (event?: React.MouseEvent) => void;   
 }
 
@@ -24,7 +24,7 @@ const NewsCard = ({
   url,
   // Destructure new props with defaults
   isSelectable = false,
-  isSelected = false,
+  isAnalyzed = false,
   onClick,
 }: NewsCardProps) => {
   // Format the date string if it exists
@@ -41,11 +41,10 @@ const NewsCard = ({
     "news-card animate-fade-in h-full flex flex-col", // Base classes
     "transition-all duration-200 ease-in-out", // Smooth transitions
     {
-      "cursor-pointer hover:scale-105 hover:shadow-lg": isSelectable, // Style for selectable items
-      "ring-2 ring-blue-500 ring-offset-2 scale-105 shadow-lg": isSelected, // Style for the selected item
-      "opacity-50 grayscale hover:opacity-100 hover:grayscale-0": isSelectable && !isSelected, // Dim unselected items when selectable
-      // Apply wiggle animation when the card is part of an active interaction mode
-      "animate-wiggle": isSelectable, 
+      "cursor-pointer hover:scale-105 hover:shadow-lg": isSelectable, // Style when clickable
+      "ring-2 ring-green-500 ring-offset-2 scale-105 shadow-lg": isAnalyzed, 
+      "opacity-50 grayscale hover:opacity-100 hover:grayscale-0": isSelectable && !isAnalyzed, 
+      "animate-wiggle": isSelectable && !isAnalyzed, 
     }
   );
 
@@ -66,8 +65,7 @@ const NewsCard = ({
   );
 
   // --- Link Wrapping --- 
-  // Wrap with link only if NOT in an interaction mode OR if URL exists and interaction mode is off
-  // If in interaction mode, the onClick on the Card itself handles the selection.
+  // Wrap with link only if NOT selectable (i.e., not in analysis mode)
   if (url && !isSelectable) {
     return (
       <a href={url} target="_blank" rel="noopener noreferrer" className="block h-full">

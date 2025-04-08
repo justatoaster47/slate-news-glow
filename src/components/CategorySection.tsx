@@ -18,16 +18,16 @@ interface NewsItem {
 interface CategorySectionProps {
   category: string;
   newsItems: SharedNewsItem[]; // Use the imported shared type
-  isInteractionActive: boolean; // New prop: Is an interactive mode selected?
-  selectedItemId: string | number | null; // New prop: Which item is selected for analysis?
-  onItemSelect: (itemId: string | number, event?: React.MouseEvent) => void; // New prop: Callback when an item is clicked in interaction mode
+  isModeActive: boolean;
+  analyzedItemId: string | number | null;
+  onItemSelect: (itemId: string | number, event?: React.MouseEvent) => void;
 }
 
 const CategorySection = ({
   category,
   newsItems,
-  isInteractionActive,
-  selectedItemId,
+  isModeActive,
+  analyzedItemId,
   onItemSelect,
 }: CategorySectionProps) => {
   const getCategoryIcon = () => {
@@ -56,13 +56,13 @@ const CategorySection = ({
           <NewsCard
             key={item.id}
             title={item.title}
-            summary={item.summary} // Using description/summary from API
+            summary={item.summary}
             source={item.source}
-            publishedAt={item.publishedAt} // Pass publishedAt
-            url={item.url} // Pass url
-            isSelectable={isInteractionActive && item.id !== selectedItemId}
-            isSelected={isInteractionActive && item.id === selectedItemId}
-            onClick={(e) => isInteractionActive && onItemSelect(item.id, e)}
+            publishedAt={item.publishedAt}
+            url={item.url}
+            isSelectable={isModeActive}
+            isAnalyzed={item.id === analyzedItemId}
+            onClick={(e) => isModeActive && onItemSelect(item.id, e)}
           />
         ))}
       </div>
