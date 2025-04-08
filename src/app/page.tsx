@@ -1,21 +1,15 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
-import CategorySection from '@/components/CategorySection';
+// import CategorySection from '@/components/CategorySection'; // No longer imported directly
 import Footer from '@/components/Footer';
 import { supabase } from '@/lib/supabase/client'; // Import the basic Supabase client
+import { NewsItem } from '@/lib/types'; // Import the shared NewsItem type
+import DashboardContent from '@/components/DashboardContent'; // Import the new wrapper
 
 // --- Type Definitions ---
 
 // Structure matching the data we select from the DB
-interface DbNewsArticle {
-  id: number; // Assuming we select the primary key
-  url: string;
-  title: string;
-  description?: string | null;
-  source_name?: string | null; // Renamed from source.name
-  published_at: string; 
-  summary?: string | null; // Add the summary field
-}
+// No longer need DbNewsArticle here, use NewsItem from types
 
 // Structure for searchParams passed to the page
 interface HomePageProps {
@@ -25,7 +19,8 @@ interface HomePageProps {
 // Removed the old getBaseUrl and getNewsData functions that called /api/news
 
 // Fetch news data directly from Supabase DB
-async function fetchNewsFromDb(category: string): Promise<DbNewsArticle[]> {
+// Return type changed to NewsItem[]
+async function fetchNewsFromDb(category: string): Promise<NewsItem[]> {
   const functionName = '[Page:fetchNewsFromDb]';
   console.log(`${functionName} Fetching news for category '${category}' from database.`);
 
@@ -44,7 +39,20 @@ async function fetchNewsFromDb(category: string): Promise<DbNewsArticle[]> {
 
     console.log(`${functionName} Fetched ${data?.length ?? 0} articles for category '${category}'.`);
     // Ensure data is an array, default to empty array if null/undefined
-    return data ?? []; 
+    // Map directly to NewsItem structure here, ensuring id is number
+    const mappedData: NewsItem[] = (data ?? []).map(item => ({
+      id: item.id, // Use the numeric database ID
+      url: item.url,
+      title: item.title,
+      summary: item.summary ?? item.description ?? '',
+      source: item.source_name ?? 'Source unavailable',
+      publishedAt: item.published_at,
+      description: item.description, // Keep original fields if needed elsewhere
+      source_name: item.source_name,
+      category: category, // Add category for potential use
+    }));
+
+    return mappedData;
 
   } catch (error) {
     console.error(`${functionName} Error fetching from database:`, error);
@@ -87,17 +95,10 @@ export default async function HomePage({ searchParams }: HomePageProps) {
   // Fetch data for the resolved DB category from the DB
   const categoryNewsData = await fetchNewsFromDb(dbCategory);
 
-  // Transform data for the CategorySection component
-  const newsItemsForSection = categoryNewsData.map(item => ({
-    id: item.url, 
-    title: item.title,
-    summary: item.summary ?? item.description ?? '', 
-    source: item.source_name ?? 'Source unavailable',
-    publishedAt: item.published_at, 
-    url: item.url,
-  }));
+  // No longer need the transformation here, fetchNewsFromDb returns NewsItem[]
+  // const newsItemsForSection = categoryNewsData.map(item => (...)); 
 
-  if (!newsItemsForSection || newsItemsForSection.length === 0) {
+  if (!categoryNewsData || categoryNewsData.length === 0) {
       console.log(`[Page] No news items found in DB for resolved category: ${dbCategory}`);
   }
 
@@ -105,9 +106,12 @@ export default async function HomePage({ searchParams }: HomePageProps) {
     <div className="min-h-screen flex flex-col bg-white">
       <Navbar currentCategory={urlCategory} />
       <main className="flex-1 container mx-auto px-4 py-6">
-        {/* Display the section using the resolved DB category name 
-            (or consider passing urlCategory if you want the display title to match the URL) */}
-        <CategorySection category={dbCategory} newsItems={newsItemsForSection} />
+        {/* Use DashboardContent wrapper */}
+        <DashboardContent
+          initialCategory={dbCategory} // Pass the resolved DB category name
+          initialNewsItems={categoryNewsData} // Pass the fetched data directly
+        />
+        {/* <CategorySection category={dbCategory} newsItems={newsItemsForSection} /> // Old rendering */}
       </main>
       <Footer />
     </div>

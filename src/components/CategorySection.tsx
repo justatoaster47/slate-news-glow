@@ -1,6 +1,9 @@
+'use client'; // Mark as a Client Component
+
 import React from 'react';
 import NewsCard from './NewsCard';
 import { Laptop, Landmark, Building2, Globe } from 'lucide-react';
+import { NewsItem as SharedNewsItem } from '@/lib/types'; // Import the shared type
 
 // Define the expected shape of a news item, matching NewsCard props
 interface NewsItem {
@@ -14,10 +17,19 @@ interface NewsItem {
 
 interface CategorySectionProps {
   category: string;
-  newsItems: NewsItem[]; // Use the defined interface
+  newsItems: SharedNewsItem[]; // Use the imported shared type
+  isInteractionActive: boolean; // New prop: Is an interactive mode selected?
+  selectedItemId: string | number | null; // New prop: Which item is selected for analysis?
+  onItemSelect: (itemId: string | number, event?: React.MouseEvent) => void; // New prop: Callback when an item is clicked in interaction mode
 }
 
-const CategorySection = ({ category, newsItems }: CategorySectionProps) => {
+const CategorySection = ({
+  category,
+  newsItems,
+  isInteractionActive,
+  selectedItemId,
+  onItemSelect,
+}: CategorySectionProps) => {
   const getCategoryIcon = () => {
     switch (category.toLowerCase()) {
       case 'tech':
@@ -48,6 +60,9 @@ const CategorySection = ({ category, newsItems }: CategorySectionProps) => {
             source={item.source}
             publishedAt={item.publishedAt} // Pass publishedAt
             url={item.url} // Pass url
+            isSelectable={isInteractionActive && item.id !== selectedItemId}
+            isSelected={isInteractionActive && item.id === selectedItemId}
+            onClick={(e) => isInteractionActive && onItemSelect(item.id, e)}
           />
         ))}
       </div>
