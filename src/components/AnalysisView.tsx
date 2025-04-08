@@ -56,7 +56,7 @@ const AnalysisView = ({ mode, item, onClose }: AnalysisViewProps) => {
         <CardContent className="pt-4 flex-grow overflow-y-auto"> {/* Allow content to scroll if needed */}
           {/* Placeholder for Mode-Specific Content */}
           <p className="text-gray-600">
-            Displaying analysis for '{mode.name}' on the selected article.
+            Displaying analysis for &apos;{mode.name}&apos; on the selected article.
             <br />
             (Use filler content for now as requested in the wireframe)
           </p>

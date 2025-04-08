@@ -16,6 +16,7 @@ const AnalysisResult = ({ modeId, item, onClose }: AnalysisResultProps) => {
   const renderAnalysisContent = () => {
     switch (modeId) {
       case 'summary':
+<<<<<<< HEAD
         return <p>Generating AI summary for: "{item.title}"...</p>;
       case 'trends':
         return <p>Analyzing trends related to: "{item.title}"...</p>;
@@ -23,6 +24,15 @@ const AnalysisResult = ({ modeId, item, onClose }: AnalysisResultProps) => {
         return <p>Calculating sentiment for: "{item.title}"...</p>;
       case 'deep_dive':
         return <p>Preparing deep dive for: "{item.title}"...</p>;
+=======
+        return <p>Generating AI summary for: &quot;{item.title}&quot;...</p>;
+      case 'trends':
+        return <p>Analyzing trends related to: &quot;{item.title}&quot;...</p>;
+      case 'sentiment':
+        return <p>Calculating sentiment for: &quot;{item.title}&quot;...</p>;
+      case 'deep_dive':
+        return <p>Preparing deep dive for: &quot;{item.title}&quot;...</p>;
+>>>>>>> 9b2e424 (interactive mode renders into new ui)
       default:
         return <p>Unknown analysis mode: {modeId}</p>;
     }
