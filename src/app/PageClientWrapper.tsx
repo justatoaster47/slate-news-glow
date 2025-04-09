@@ -24,10 +24,11 @@ export default function PageClientWrapper({ initialCategory, initialNewsItems }:
 
   const activeMode = useMemo(() => modes.find(m => m.id === activeModeId), [activeModeId]);
 
-  // Effect to close AnalysisView when category changes
+  // Effect to clear mode and close AnalysisView when category changes
   useEffect(() => {
-    console.log(`[PageClientWrapper] Category changed to: ${initialCategory}. Closing analysis view if open.`);
+    console.log(`[PageClientWrapper] Category changed to: ${initialCategory}. Resetting mode and closing analysis view.`);
     setItemForAnalysis(null); // Close analysis view on category navigation
+    setActiveModeId(null); // Also reset the active mode
   }, [initialCategory]);
 
   // --- Handlers --- 
