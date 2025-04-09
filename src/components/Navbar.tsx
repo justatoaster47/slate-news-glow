@@ -27,7 +27,7 @@ const Navbar = ({ currentCategory = 'tech' }: NavbarProps) => {
             href={`/?category=${category}`}
             className={`px-4 py-1 rounded-full text-sm font-medium transition-colors duration-150 capitalize ${
               currentCategory === category
-                ? 'bg-slate-200 text-slate-900'
+                ? 'bg-slate-100 text-slate-900'
                 : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
             }`}
             passHref

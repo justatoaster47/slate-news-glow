@@ -145,26 +145,41 @@ econ-dashboard/
 *   `.DS_Store` (macOS specific).
 *   `*.pem`, `*.key` (Private keys).
 
-## Best Practices During Implementation
-* At the end of every task and every sub-task, include how to verify that it was implemented successfully and is fully functional
-* At the end of every task, also include any actions that need to be taken externally, such as on the Supabase dashboard, Vercel dashboard, getting API keys, etc.
-* Avoid having files over 200-300 lines of code. Refactor at that point.
-* when i prompt you "fix thoroughly" and you know what the issue is do this: consider
-all potential fixes equally, remove any bias you have on what is already
-correct. search the web (use brave mcp) on stackoverflow, github issues, and
-any relevant documentation (find documentation links in instructions.md).
-write a reasoning paragraph for each potential fix you come across on why it
-will and will not work for our use case, our project, and the versions of the
-frameworks/langauges/etc we are using. rank these by which you believe is
-best. attempt the best one, and if this fails, remove any implementation you
-did in that attempt, then attempt the second best one. avoid repeating the
-same fixes to the same problem if you know they haven't worked before.
-* DO NOT DO TASKS THAT ARE COMMENTED OUT: <!-- --> (this notation)
-* only implement the changes i've asked for, that my request is directly
-dependent upon, or that are a clear and obvious improvement. do not touch
-the codebase outside of where is necessary for the current task, try to keep
-all your changes localized to a few files to keep debugging easy and the
-architecture more modularized.
+## Best Practices During Implementation / CURSORRULES
+* when we encounter a recurring issue, do this:
+    1. consider all potential fixes equally, remove any bias you have on what is
+    already correct. 
+    2. search the web (use brave mcp) on stackoverflow, github
+    issues, and any relevant documentation (find documentation links in
+    instructions.md)
+    3. write a reasoning paragraph for each potential fix you come
+    across on why it will and will not work for our use case, our project, and
+    the versions of the frameworks/langauges/etc we are using. rank these by
+    which you believe is best. 
+    4. attempt the best one
+    5. if your fix attempts fail. immediately remove any implementations in
+       attempting that fix. undo these changes throughly. then move onto the
+       next best one. 
+    6. repeat until success
+* DO NOT DO TASKS THAT ARE COMMENTED OUT: <!-- --> (this
+notation)
+* plan a task multiple steps ahead before implementation. think through
+carefully and gather any context that could be even slighty relevant. 
+* implement and fix code in the most concise, elegant way possible. in this
+your goal is to achieve the exact functionality with the least amount of code.
+* do not add any new features or functionality unless explicitly asked to do
+  so. do not change any aspect of code that is not absolutely necessary to
+  complete the given task. 
+* do not ask me to do tasks such as read files, create files, run commands,
+etc if you are able to do them yourself. 
+* use consistent naming conventions and file structures.
+* before creating any new files, check through all potential directories that
+  the files or directories could be in. 
+* At the end of every task and every sub-task, include how to verify that it
+was implemented successfully and is fully functional. Also list any actions
+that need to be taken externally, such as on the Supabase dashboard, Vercel
+dashboard, getting API keys, etc.
+
 
 
 ## Implementation Plan: Econ Dashboard (Slate News Glow)
