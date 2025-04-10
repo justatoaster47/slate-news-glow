@@ -34,7 +34,6 @@ export default function PageClientWrapper({ initialCategory, initialNewsItems }:
   // --- Handlers --- 
   const handleModeSelect = (modeId: string | null) => {
     setActiveModeId(modeId);
-    setItemForAnalysis(null); // Always clear item when mode changes
     console.log('[PageClientWrapper] Mode selected:', modeId);
   };
 
@@ -55,7 +54,8 @@ export default function PageClientWrapper({ initialCategory, initialNewsItems }:
 
   const handleCloseAnalysis = () => {
     setItemForAnalysis(null); // Clear item to return to dashboard view for the active mode
-    console.log('[PageClientWrapper] Closing analysis view, returning to mode:', activeModeId);
+    setActiveModeId(null); // Added: Also clear the active mode
+    console.log('[PageClientWrapper] Closing analysis view and clearing mode.'); // Updated log message
   };
 
   return (

@@ -205,19 +205,6 @@ core features like authentication, data display, and basic AI processing.
     *   Action: Create the Supabase client instance configuration file (`src/lib/supabaseClient.js` or similar) using the environment variables.
     *   Action: Define initial database schemas using the Supabase SQL editor or local migration files (if using Supabase CLI). Define tables like `data_sources` (for managing API source info/status) and maybe a placeholder `aggregated_data` (structure TBD based on specific data needs). Note: The `users` table is implicitly managed by Supabase Auth, but a `profiles` table might be useful for custom user data, linked via foreign key to `auth.users.id`.
     *   [Deliverable]: Functional Supabase instance connected, client libraries installed, client configured, required environment variables defined, initial core DB schema (SQL) created.
-<!-- *   **Task 1.3: User Authentication Implementation** -->
-<!--     *   Action: Configure Supabase Auth settings in the Supabase dashboard, enabling the Email/Password provider. Customize email templates if desired. -->
-<!--     *   Action: Create authentication pages/routes within the Next.js app structure (e.g., `src/app/(auth)/login/page.js`, `src/app/(auth)/signup/page.js`). -->
-<!--     *   Action: Build UI forms for login and registration using pre-existing Shadcn components (`Input`, `Button`, `Label`, `Card`, etc.) within the auth pages. -->
-<!--     *   Action: Integrate Supabase Auth client functions (`supabase.auth.signUp`, `supabase.auth.signInWithPassword`, `supabase.auth.signOut`) into the forms/pages. Consider using Next.js Server Actions for handling form submissions securely or implement client-side logic with appropriate loading/error states. -->
-<!--     *   Action: Implement session management and route protection. Use Supabase Auth Helpers for Next.js (`createClientComponentClient`, `createServerComponentClient`, middleware) to manage user sessions across Server Components, Client Components, and API Routes/Server Actions. Protect the `/dashboard` route group. -->
-<!--     *   [Deliverable]: Users can sign up, log in, log out securely. Dashboard access is restricted to authenticated users. Session state is managed consistently. -->
-<!-- *   **Task 1.4: Basic Layout & Navigation** -->
-<!--     *   Action: Implement or refine the root layout (`src/app/layout.js`). -->
-<!--     *   Action: Create or refine the dashboard layout (`src/app/dashboard/layout.js`) with placeholders for header/sidebar, ensuring it's protected by the authentication setup. -->
-<!--     *   Action: Implement functional shared `Header` and `Sidebar` components (`src/components/shared/`) using Shadcn/Lucide components. Header should conditionally display user info/logout or login links. Sidebar should contain initial navigation links (even if just placeholders initially). -->
-<!--     *   Action: Ensure layouts adapt based on authentication status. -->
-<!--     *   [Deliverable]: Main application shell with persistent layout elements, basic navigation structure, responsive authentication state display, and protected dashboard area. -->
 **Phase 2: Core Data Aggregation - Backend**
 **Goal:** Implement backend logic to fetch data from the *most critical* external APIs and establish a basic data handling strategy.
 *   **Task 2.1: API Client Library (`src/lib/api-clients/`)**
@@ -247,23 +234,14 @@ core features like authentication, data display, and basic AI processing.
 **Phase 3: Basic Dashboard Implementation**
 **Goal:** Display the fetched core data sets on the dashboard in a user-friendly manner.
 *   **Task 3.1: Dashboard Page Structure (`src/app/dashboard/page.js`)**
-    <!-- *   Action: Design the main dashboard layout grid using CSS Grid or Flexbox. -->
     *   Action: Use Server Components to fetch initial data via the backend logic created in Phase 2 (or trigger client-side fetches if more dynamic interaction is needed).
     *   Action: Implement loading states using Next.js `loading.js` files or React Suspense boundaries.
     *   Action: Implement basic error handling display (e.g., Shadcn `Alert` component for "Failed to load data").
     *   [Deliverable]: Dashboard page structure capable of loading and displaying data components with appropriate loading/error states.
-<!-- *   **Task 3.2: News Feed Component** -->
-<!--     *   Action: Create a `NewsFeed` component (`src/components/dashboard/NewsFeed.js`) using Shadcn `Card` components or similar layout structures. -->
-<!--     *   Action: Display fetched news articles (title, source, publication date, link to original). Add placeholder for AI summary. -->
-<!--     *   [Deliverable]: A widget displaying a list of recent news articles on the dashboard. -->
-<!-- *   **Task 3.3: Stock Ticker/Watchlist Component (Basic)** -->
-<!--     *   Action: Create a `StockTicker` component (`src/components/dashboard/StockTicker.js`). -->
-<!--     *   Action: Display basic quote data (price, change) for a predefined list of stocks (e.g., major indices) fetched via the backend logic. -->
-<!--     *   [Deliverable]: A widget displaying basic stock information for predefined symbols. -->
-<!-- *   **Task 3.4: Recent Filings Component** -->
-<!--     *   Action: Create a `RecentFilings` component (`src/components/dashboard/RecentFilings.js`). -->
-<!--     *   Action: Display the list of fetched SEC filing metadata (company, form type, date, link) using Shadcn `Table` or `Card` components. -->
-<!--     *   [Deliverable]: A widget displaying recent SEC filings. -->
+*   **Task 3.2: News Feed Component**
+    *   Action: Create a `NewsFeed` component (`src/components/dashboard/NewsFeed.js`) using Shadcn `Card` components or similar layout structures.
+    *   Action: Display fetched news articles (title, source, publication date, link to original). Add placeholder for AI summary.
+    *   [Deliverable]: A widget displaying a list of recent news articles on the dashboard.
 **Phase 4: Core AI Integration**
 **Goal:** Integrate basic AI capabilities, starting with text summarization for news articles.
 *   **Task 4.1: AI Service Integration (`src/services/analysis/`)**
@@ -275,10 +253,6 @@ core features like authentication, data display, and basic AI processing.
     *   Action: Store the generated summary alongside the news article data (in cache or Supabase DB). Update the corresponding schema if storing in DB.
     *   Action: Update the `NewsFeed` component (`src/components/dashboard/NewsFeed.js`) to display the AI-generated summary if available.
     *   [Deliverable]: News articles displayed on the dashboard include AI-generated summaries.
-<!-- *   **Task 4.3: (Optional) Basic Sentiment Analysis** -->
-<!--     *   Action: If feasible, extend the `aiService.js` to perform sentiment analysis on news headlines/summaries. -->
-<!--     *   Action: Store/display sentiment score (e.g., positive/negative/neutral icon or text). -->
-<!--     *   [Deliverable]: News items potentially display a sentiment indicator. -->
 
 ### Phases In Progress 
 **Phase 5: Dashboard Enhancement & Filtering**

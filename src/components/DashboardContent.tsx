@@ -37,9 +37,10 @@ export default function DashboardContent({
   if (activeMode && itemForAnalysis) {
     return (
       <AnalysisView 
-        mode={activeMode} 
+        activeModeId={activeModeId}
         item={itemForAnalysis} 
         onClose={handleCloseAnalysis}
+        onModeSelect={handleModeSelect}
       />
     );
   } else {
